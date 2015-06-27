@@ -1,4 +1,6 @@
-package info.hb.video.riak.sample;
+package info.hb.riak.cluster.sample;
+
+import info.hb.riak.cluster.sample.HBRiakClientImplExample.Book;
 
 import java.net.UnknownHostException;
 
@@ -22,17 +24,6 @@ import com.basho.riak.client.core.util.BinaryValue;
  *
  */
 public class RiakCURDDemo {
-
-	// 基本的POJO类演示Riak中的类型交换
-	public static class Book {
-
-		public String title;
-		public String author;
-		public String body;
-		public String isbn;
-		public Integer copiesOwned;
-
-	}
 
 	// 创建Riak客户端对象
 	private static RiakCluster setUpCluster() throws UnknownHostException {
@@ -88,25 +79,23 @@ public class RiakCURDDemo {
 			System.out.println("成功删除!!!!!!");
 			//
 			System.out.println("###########################读取对象数据############################");
-			Book mobyDick = new Book();
-			mobyDick.title = "《大数据实战》";
-			mobyDick.author = "永不止步";
-			mobyDick.body = "预练此功，必先自宫......";
-			mobyDick.isbn = "1111979723";
-			mobyDick.copiesOwned = 3;
+			Book book = new Book();
+			book.setTitle("《大数据实战》");
+			book.setAuthor("永不止步");
+			book.setBody("预练此功，必先自宫......");
+			book.setIsbn("1111979723");
+			book.setCopiesOwned(3);
 			System.out.println("Book对象创建成功......");
 			// 使用default的bucketType和books创建Namesapce
 			Namespace booksBucket = new Namespace("books");
 			Location mobyDickLocation = new Location(booksBucket, "big_data");
-			StoreValue storeBookOp = new StoreValue.Builder(mobyDick).withLocation(mobyDickLocation).build();
+			StoreValue storeBookOp = new StoreValue.Builder(book).withLocation(mobyDickLocation).build();
 			client.execute(storeBookOp);
 			System.out.println("Book对象存储成功!!!!");
 			FetchValue fetchMobyDickOp = new FetchValue.Builder(mobyDickLocation).build();
 			Book fetchedBook = client.execute(fetchMobyDickOp).getValue(Book.class);
 			System.out.println("Book对象读取成功!!!!");
-			System.out.println(mobyDick.getClass() + "  ,  " + fetchedBook.getClass());
-			System.out.println(mobyDick.title + "  ,  " + fetchedBook.title);
-			System.out.println(mobyDick.author + "  ,  " + fetchedBook.author);
+			System.out.println(book.getClass() + "  ,  " + fetchedBook.getClass());
 
 			System.out.println("所有测试Riak的CURD成功！！！！！！");
 

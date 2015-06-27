@@ -1,4 +1,4 @@
-package info.hb.video.riak.utils;
+package info.hb.riak.cluster.utils;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
