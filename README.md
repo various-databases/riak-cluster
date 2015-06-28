@@ -19,7 +19,7 @@
 
 `ListKeys`
 
-### 二次索引(2i)命令 
+### 二级索引(2i)命令 
 
 `RawIndexQuery`
 
