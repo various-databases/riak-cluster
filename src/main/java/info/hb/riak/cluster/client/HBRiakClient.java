@@ -12,6 +12,10 @@ import com.basho.riak.client.api.commands.kv.UpdateValue.Update;
  */
 public interface HBRiakClient {
 
+	String getIpsStr();
+
+	String[] getIps();
+
 	/**
 	 * 存储、读取和删除对象：FetchValue/MultiFetch/StoreValue/UpdateValue/DeleteValue
 	 */

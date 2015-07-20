@@ -56,10 +56,12 @@ public class HBRiakClientimpl implements HBRiakClient {
 		}
 	}
 
+	@Override
 	public String getIpsStr() {
 		return ipsStr;
 	}
 
+	@Override
 	public String[] getIps() {
 		return ips;
 	}
