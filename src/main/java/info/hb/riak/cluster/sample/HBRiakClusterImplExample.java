@@ -54,7 +54,6 @@ public class HBRiakClusterImplExample {
 		client.writeImage("default", "videos", "test1.jpg", ImageIO.read(new File("test-image/test1.jpg")), "jpg");
 		// 删除数据
 		client.deleteObject("default", "videos", "test1.jpg");
-
 		// 关闭资源
 		client.close();
 	}
