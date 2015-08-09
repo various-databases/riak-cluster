@@ -79,6 +79,19 @@ public class HBRiakClientimpl implements HBRiakClient {
 	}
 
 	@Override
+	public void writeVideo(String bucketType, String bucketName, String key, byte[] videoData) {
+		try {
+			RiakObject riakObject = new RiakObject().setContentType("video/mp4")
+					.setValue(BinaryValue.create(videoData));
+			writeObject(bucketType, bucketName, key, riakObject);
+		} catch (Exception e) {
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
+			// 注意：项目稳定时，需要把抛出异常去掉，防止因个别异常线程停止
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
 	public void writeImage(String bucketType, String bucketName, String key, BufferedImage bi, String format) {
 		try {
 			RiakObject riakObject = new RiakObject().setContentType("image/" + format).setValue(

@@ -26,6 +26,8 @@ public interface HBRiakClient {
 
 	void writeImage(String bucketType, String bucketName, String key, BufferedImage bi, String format);
 
+	void writeVideo(String bucketType, String bucketName, String key, byte[] videoData);
+
 	// 读数据
 	<T> T readObject(String bucketType, String bucketName, String key, Class<T> type);
 
