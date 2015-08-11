@@ -3,6 +3,7 @@ package info.hb.riak.cluster.client;
 import java.awt.image.BufferedImage;
 
 import com.basho.riak.client.api.commands.kv.UpdateValue.Update;
+import com.basho.riak.client.core.util.BinaryValue;
 
 /**
  * Riak客户端接口
@@ -23,6 +24,8 @@ public interface HBRiakClient {
 	void writeText(String bucketType, String bucketName, String key, String data);
 
 	void writeObject(String bucketType, String bucketName, String key, Object object);
+
+	void writeBinaryValue(String bucketType, String bucketName, String key, String contentType, BinaryValue value);
 
 	void writeImage(String bucketType, String bucketName, String key, BufferedImage bi, String format);
 

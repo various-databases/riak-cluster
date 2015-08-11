@@ -68,36 +68,32 @@ public class HBRiakClientimpl implements HBRiakClient {
 
 	@Override
 	public void writeText(String bucketType, String bucketName, String key, String data) {
-		try {
-			RiakObject riakObject = new RiakObject().setContentType("text/plain").setValue(BinaryValue.create(data));
-			writeObject(bucketType, bucketName, key, riakObject);
-		} catch (Exception e) {
-			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
-			// 注意：项目稳定时，需要把抛出异常去掉，防止因个别异常线程停止
-			throw new RuntimeException(e);
-		}
+		writeBinaryValue(bucketType, bucketName, key, "text/plain", BinaryValue.create(data));
 	}
 
 	@Override
 	public void writeVideo(String bucketType, String bucketName, String key, byte[] videoData) {
-		try {
-			RiakObject riakObject = new RiakObject().setContentType("video/mp4")
-					.setValue(BinaryValue.create(videoData));
-			writeObject(bucketType, bucketName, key, riakObject);
-		} catch (Exception e) {
-			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
-			// 注意：项目稳定时，需要把抛出异常去掉，防止因个别异常线程停止
-			throw new RuntimeException(e);
-		}
+		writeBinaryValue(bucketType, bucketName, key, "video/mp4", BinaryValue.create(videoData));
 	}
 
 	@Override
 	public void writeImage(String bucketType, String bucketName, String key, BufferedImage bi, String format) {
 		try {
-			RiakObject riakObject = new RiakObject().setContentType("image/" + format).setValue(
+			writeBinaryValue(bucketType, bucketName, key, "image/" + format,
 					BinaryValue.create(ImageUtils.transBI2BytesBytes(bi, format)));
-			writeObject(bucketType, bucketName, key, riakObject);
 		} catch (IOException e) {
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
+			// 注意：项目稳定时，需要把抛出异常去掉，防止因个别异常线程停止
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
+	public void writeBinaryValue(String bucketType, String bucketName, String key, String contentType, BinaryValue value) {
+		try {
+			RiakObject riakObject = new RiakObject().setContentType(contentType).setValue(value);
+			writeObject(bucketType, bucketName, key, riakObject);
+		} catch (Exception e) {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			// 注意：项目稳定时，需要把抛出异常去掉，防止因个别异常线程停止
 			throw new RuntimeException(e);
